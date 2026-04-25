@@ -1,0 +1,72 @@
+.glass-sidebar {
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(20px);
+    border-right: 1px solid rgba(255,255,255,0.6);
+}
+.glass-card {
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.7);
+}
+
+.module-row {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.module-row:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(59,126,248,0.12);
+}
+/* Style saat modul aktif */
+.module-row.active {
+  background: linear-gradient(135deg, rgba(59,126,248,0.08), rgba(37,99,235,0.06));
+  border: 1.5px solid rgba(59,126,248,0.4);
+  box-shadow: 0 8px 28px rgba(59,126,248,0.15);
+}
+/* Judul modul berubah warna biru saat aktif */
+.module-row.active .module-title {
+  color: #2563eb;
+}
+
+/* Badge checkmark — tersembunyi by default */
+.module-badge {
+  display: none;
+  animation: --var(--animate-pop-in-portal);
+}
+/* Badge muncul saat aktif */
+.module-row.active .module-badge {
+  display: flex;
+}
+
+.btn-buka {
+    background: linear-gradient(135deg, #3b7ef8, #2563eb);
+    transition: all 0.2s ease;
+}
+.btn-buka:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(59,126,248,0.4);
+}
+
+.btn-active {
+    background: transparent;
+    border: 2px solid #3b7ef8;
+    color: #3b7ef8;
+    transition: all 0.2s ease;
+}
+.btn-active:hover {
+    background: #3b7ef8;
+    color: white;
+}
+
+.avatar-ring {
+    background: conic-gradient(from 0deg, #3b82f6, #2563eb, #1d4ed8, #3b82f6);
+    padding: 3px;
+    border-radius: 50%;
+}
+
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+.bg-dot-pattern {
+    background-image: radial-gradient(circle, #d1d5db 1px, transparent 1px);
+    background-size: 24px 24px;
+}
