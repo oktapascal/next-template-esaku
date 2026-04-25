@@ -13,6 +13,7 @@ type SidebarInfo = {
     displayRole: string;
     displayInitials: string;
     nikKaryawan: string;
+    namaKaryawan: string;
 };
 
 type PortalSidebarProps = SidebarInfo & {
@@ -30,7 +31,7 @@ function InfoRow({ label, value }: { label: string; value: string }) {
     );
 }
 
-export default function PortalSidebar({ displayName, displayRole, displayInitials, nikKaryawan, onLogoutClick }: PortalSidebarProps) { 
+export default function PortalSidebar({ displayName, namaKaryawan, displayRole, displayInitials, nikKaryawan, onLogoutClick }: PortalSidebarProps) { 
     
     return (
         <aside className={["w-64 shrink-0 flex flex-col p-6 relative overflow-hidden animate-slide-in-portal", styles['glass-sidebar']].join(" ")}>
@@ -59,6 +60,8 @@ export default function PortalSidebar({ displayName, displayRole, displayInitial
             <div className="relative z-10 space-y-4 flex-1">
                 <div className={["rounded-2xl p-4 space-y-3", styles['glass-card']].join(" ")}>
                     <InfoRow label="NIK" value={nikKaryawan} />
+                    <div className="w-full h-px bg-slate-100"></div>
+                    <InfoRow label="Nama" value={namaKaryawan} />
                     <div className="w-full h-px bg-slate-100"></div>
                     <InfoRow label="Jabatan" value={displayRole} />
                 </div>

@@ -9,6 +9,7 @@ import {
     selectDisplayName,
     selectDisplayRole,
     selectNikKaryawan,
+    selectNamaKaryawan,
     selectDisplayInitials,
     selectAllPermissions,
     selectFavoritePermissions,
@@ -48,6 +49,7 @@ export function usePortal() {
     const displayName         = usePortalStore(selectDisplayName);
     const displayRole         = usePortalStore(selectDisplayRole);
     const nikKaryawan         = usePortalStore(selectNikKaryawan);
+    const namaKaryawan        = usePortalStore(selectNamaKaryawan);
     const initials            = usePortalStore(selectDisplayInitials);
     const activeTab           = usePortalStore(selectActiveTab);
     const searchQuery         = usePortalStore(selectSearchQuery);
@@ -120,6 +122,7 @@ export function usePortal() {
         displayName,
         displayRole,
         nikKaryawan,
+        namaKaryawan,
         initials,
         activeModuleId,
  

@@ -121,6 +121,8 @@ export const selectDisplayName = (s: PortalState) =>
 export const selectDisplayRole = (s: PortalState) => toNonEmpty(s.currentUser?.role?.name) ?? '-';
  
 export const selectNikKaryawan = (s: PortalState) => toNonEmpty(s.currentUser?.karyawan?.nik_karyawan) ?? '-';
+
+export const selectNamaKaryawan = (s: PortalState) => toNonEmpty(s.currentUser?.karyawan?.nama_karyawan) ?? '-';
  
 export const selectAllPermissions = (s: PortalState) => s.currentUser?.permissions ?? [];
  

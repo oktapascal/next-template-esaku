@@ -44,6 +44,7 @@ export default function PortalClient() {
                         displayRole={portal.displayRole}
                         displayInitials={portal.initials}
                         nikKaryawan={portal.nikKaryawan}
+                        namaKaryawan={portal.namaKaryawan}
                         onLogoutClick={portal.handleLogout}
                     />
                     {/* Main Content */}
