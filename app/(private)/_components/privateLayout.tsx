@@ -221,7 +221,7 @@ export function PrivateLayout({ children }: { children: React.ReactNode }) {
                             <div className="absolute right-0 top-[calc(100%+8px)] z-50 w-56 overflow-hidden rounded-xl border border-warm-200 bg-white shadow-lg" style={dropdownStyle(isUserMenuOpen)}>
                                 {/* Profile header */}
                                 <div className="flex items-center gap-3 border-b border-warm-200 px-4 py-3.5">
-                                    <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-brand-700 to-brand-900 text-sm font-bold text-white">
+                                    <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-linear-to-br from-brand-700 to-brand-900 text-sm font-bold text-white">
                                         {displayInitials}
                                     </div>
                                     <div className="min-w-0">
