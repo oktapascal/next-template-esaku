@@ -21,6 +21,7 @@ export interface ModuleNavigationOptions {
  */
 const ACTIVE_MODULE_PATHS: readonly string[] = [
     // tambahkan modul aktif di sini
+    'system-admin/overview'
 ];
 
 function normalizeUrl(url: string): string {

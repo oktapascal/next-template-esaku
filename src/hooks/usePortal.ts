@@ -70,6 +70,8 @@ export function usePortal() {
  
     const handleOpenModule = useCallback((defaultUrl: string, moduleId: number) => {
         const isConfigured = hasConfiguredDefaultView(defaultUrl);
+        console.log('isConfigured:', isConfigured);
+        console.log('defaultUrl:', defaultUrl);
  
         _openModule(defaultUrl, {
             router,
