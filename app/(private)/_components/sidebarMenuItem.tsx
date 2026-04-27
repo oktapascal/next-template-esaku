@@ -41,6 +41,17 @@ interface SidebarMenuItemProps {
   depth?: number;
 }
 
+/** Section header — tidak interaktif, tidak butuh hooks */
+function MenuLabel({ name }: { name: string }) {
+    return (
+        <div className="px-5 pb-1 pt-4">
+            <p className="text-[10px] font-semibold uppercase tracking-widest text-warm-400">
+                {name}
+            </p>
+        </div>
+    );
+}
+
 export function SidebarMenuItem({ item, depth = 0 }: SidebarMenuItemProps) { 
 
     const pathname    = usePathname();
@@ -93,6 +104,11 @@ export function SidebarMenuItem({ item, depth = 0 }: SidebarMenuItemProps) {
             )}
         />
     );
+
+    // ── LABEL — section header, tidak interaktif ───────────────────────────────
+    if (item.jenis_menu === 'LABEL') {
+        return <MenuLabel name={item.nama_menu} />;
+    }
 
     // ── ROOT LEVEL (depth === 0) ─────────────────────────────────────────────────
     if (isRootLevel) { 

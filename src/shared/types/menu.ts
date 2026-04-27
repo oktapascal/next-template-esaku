@@ -10,6 +10,7 @@ export interface MenuItem {
   nama_menu: string;
   icon_menu: string;
   path_url: string | null;
+  jenis_menu: string | null;
   menus: MenuItem[];        // children rekursif
 }
  
