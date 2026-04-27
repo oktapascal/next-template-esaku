@@ -25,6 +25,18 @@ type RefreshResult =
     | { ok: true; accessToken: string }
     | { ok: false };
 
+type RefreshPayload = {
+    code: number;
+    status: string;
+    data?: {
+        access_token?: string;
+        access_token_expired?: number;
+        refresh_token?: string;
+        refresh_token_expired?: number;
+        token_type?: string;
+    };
+};
+
 let refreshPromise: Promise<RefreshResult> | null = null;
 
 // ---------------------------------------------------------------------------
@@ -84,37 +96,54 @@ async function _doRefresh(): Promise<RefreshResult> {
     if (!refreshToken) return { ok: false };
  
     try {
-        const response = await fetch(`${API_BASE_URL}/auth/refresh`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ refresh_token: refreshToken }),
-            cache: 'no-store',
-        });
- 
-        if (!response.ok) return { ok: false };
- 
-        // Beberapa backend mengembalikan token di root object,
-        // sebagian lain membungkusnya di property `data`.
-        const payload = await response.json() as {
-            access_token?: string;
-            refresh_token?: string;
-            data?: {
-                access_token?: string;
-                refresh_token?: string;
-            };
-        };
-        const accessToken = payload.access_token ?? payload.data?.access_token;
-        const nextRefreshToken = payload.refresh_token ?? payload.data?.refresh_token;
+        const requestBodies = [
+            { refresh_token: refreshToken },
+            { refreshToken },
+        ];
 
-        if (!accessToken) return { ok: false };
- 
-        // Update cookie dengan token baru
-        cookieStore.set(SESSION_COOKIE_NAME, accessToken, COOKIE_OPTIONS);
-        if (nextRefreshToken) {
-            cookieStore.set(REFRESH_TOKEN_COOKIE_NAME, nextRefreshToken, COOKIE_OPTIONS);
+        for (const body of requestBodies) {
+            const response = await fetch(`${API_BASE_URL}/auth/refresh`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    // Kompatibilitas: beberapa backend membaca refresh token dari Authorization header.
+                    'Authorization': `Bearer ${refreshToken}`,
+                },
+                body: JSON.stringify(body),
+                cache: 'no-store',
+            });
+
+            if (!response.ok) {
+                // Log diagnostik agar akar masalah refresh bisa terdeteksi dari status endpoint.
+                console.warn('[api-client] Refresh endpoint returned non-OK status:', response.status);
+                continue;
+            }
+
+            let payload: RefreshPayload | null = null;
+            try {
+                payload = await response.json() as RefreshPayload;
+            } catch {
+                payload = null;
+            }
+
+            const accessToken = payload?.data?.access_token;
+            const nextRefreshToken = payload?.data?.refresh_token;
+
+            if (!accessToken) {
+                continue;
+            }
+
+            // Update cookie dengan token baru
+            cookieStore.set(SESSION_COOKIE_NAME, accessToken, COOKIE_OPTIONS);
+            if (nextRefreshToken) {
+                cookieStore.set(REFRESH_TOKEN_COOKIE_NAME, nextRefreshToken, COOKIE_OPTIONS);
+            }
+
+            return { ok: true, accessToken };
         }
- 
-        return { ok: true, accessToken };
+
+        return { ok: false };
  
     } catch (error) {
         // [FIX 3] Log error — sebelumnya error ditelan diam-diam
